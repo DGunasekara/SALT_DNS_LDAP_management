@@ -1,0 +1,8 @@
+{%- for z in pillar['dns']['zones'] %}
+zone "{{ z.name }}" {
+  type master;
+  file "/etc/bind/zones/{{ z.name }}.db";
+  allow-transfer { {{ pillar['dns']['bind']['allow_transfer'] | join('; ') }}; };
+  also-notify { {{ pillar['dns']['bind']['also_notify'] | join('; ') }}; };
+};
+{%- endfor %}
