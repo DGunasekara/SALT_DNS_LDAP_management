@@ -1,0 +1,7 @@
+dn: uid={{ uid }},{{ pillar['ldap']['base_dn'] }}
+changetype: modify
+add: pwdAccountLockedTime
+pwdAccountLockedTime: 000001010000Z
+-
+replace: shadowExpire
+shadowExpire: 1
