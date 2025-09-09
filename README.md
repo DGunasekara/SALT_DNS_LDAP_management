@@ -77,3 +77,15 @@ pillar/
   dns.sls
 
 ```
+
+### Reactors (auto‑heal on service failure)
+
+Master config snippet (on Salt master)
+
+In `/etc/salt/master.d/reactor.conf`:
+```
+reactor:
+  - 'salt/beacon/*/service/*':
+  - /srv/salt/_reactors/ldap_service_autoheal.sls
+  - /srv/salt/_reactors/dns_service_autoheal.sls
+```
