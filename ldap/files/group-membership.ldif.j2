@@ -1,0 +1,7 @@
+{%- for g in user.get('groups', []) %}
+dn: cn={{ g }},ou=Groups,{{ pillar['ldap']['base_dn'] }}
+changetype: modify
+add: memberUid
+memberUid: {{ user.uid }}
+
+{%- endfor %}
