@@ -27,53 +27,53 @@ Tasks are listed below:
 ### Repo layout
 ```
 salt/
-top.sls
-ldap/
-init.sls # meta include for ldap states
-server.sls # install & configure slapd
-schemas.sls # sync schemas
-users.sls # provision users
-passwords.sls # reset/expire passwords
-disable_delete.sls # disable or delete accounts
-groups.sls # dynamic group membership from HR pillar
-policies.sls # sudoers, access policies
-backup.sls # automated backups + rotation
-monitor.sls # beacons + service watch
-files/
-ldap.conf.j2
-olcDatabase-config.ldif.j2
-olcDatabase-mdb.ldif.j2
-add-user.ldif.j2
-set-password.ldif.j2
-disable-user.ldif.j2
-delete-user.ldif.j2
-group-membership.ldif.j2
-sudoers_ldap.conf.j2
-backup_ldap.sh.j2
-dns/
-init.sls # meta include for dns states
-bind.sls # install & base config
-zones.sls # create/validate/deploy zones from templates
-dnssec.sls # keys + rollover automation
-monitor.sls # beacons + service watch
-git_audit.sls # Git tracking for /etc/bind
-files/
-named.conf.options.j2
-named.conf.local.j2
-zone.db.j2
-dnssec-rollover.sh.j2
-_reactors/
-ldap_service_autoheal.sls
-dns_service_autoheal.sls
-_orchestrate/
-sync_ldap_everywhere.sls
-dns_push_to_secondaries.sls
-_modules/
-ldap_tools.py # optional helpers (wrap ldapmodify/ldappasswd)
+  top.sls
+  ldap/
+    init.sls # meta include for ldap states
+    server.sls # install & configure slapd
+    schemas.sls # sync schemas
+    users.sls # provision users
+    passwords.sls # reset/expire passwords
+    disable_delete.sls # disable or delete accounts
+    groups.sls # dynamic group membership from HR pillar
+    policies.sls # sudoers, access policies
+    backup.sls # automated backups + rotation
+    monitor.sls # beacons + service watch
+    files/
+      ldap.conf.j2
+      olcDatabase-config.ldif.j2
+      olcDatabase-mdb.ldif.j2
+      add-user.ldif.j2
+      set-password.ldif.j2
+      disable-user.ldif.j2
+      delete-user.ldif.j2
+      group-membership.ldif.j2
+      sudoers_ldap.conf.j2
+      backup_ldap.sh.j2
+  dns/
+    init.sls # meta include for dns states
+    bind.sls # install & base config
+    zones.sls # create/validate/deploy zones from templates
+    dnssec.sls # keys + rollover automation
+    monitor.sls # beacons + service watch
+    git_audit.sls # Git tracking for /etc/bind
+    files/
+      named.conf.options.j2
+      named.conf.local.j2
+      zone.db.j2
+      dnssec-rollover.sh.j2
+  _reactors/
+    ldap_service_autoheal.sls
+    dns_service_autoheal.sls
+  _orchestrate/
+    sync_ldap_everywhere.sls
+    dns_push_to_secondaries.sls
+  _modules/
+    ldap_tools.py # optional helpers (wrap ldapmodify/ldappasswd)
 
 pillar/
-top.sls
-ldap.sls
-dns.sls
+  top.sls
+  ldap.sls
+  dns.sls
 
 ```
