@@ -89,3 +89,29 @@ reactor:
   - /srv/salt/_reactors/ldap_service_autoheal.sls
   - /srv/salt/_reactors/dns_service_autoheal.sls
 ```
+
+#### How to use
+
+Assign roles via grains on target minions:
+
+```
+salt 'idp*' grains.append roles ldap
+salt 'dns*' grains.append roles dns
+```
+
+Place this repo under /srv/salt and pillars under /srv/pillar (or your paths).
+Configure reactor on the master (reactor.conf snippet above) and restart the master.
+
+Highstate:
+
+```
+salt -G 'roles:ldap' state.apply ldap
+salt -G 'roles:dns' state.apply dns
+```
+
+Orchestrate syncs:
+
+```
+salt-run state.orchestrate _orchestrate.sync_ldap_everywhere
+salt-run state.orchestrate _orchestrate.dns_push_to_secondaries
+```
