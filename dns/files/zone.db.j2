@@ -1,0 +1,25 @@
+$TTL {{ zone.ttl }}
+@ IN SOA {{ zone.soa.mname }} {{ zone.soa.rname }} (
+     {%- if zone.soa.serial_strategy == 'epoch' -%}
+     {{ salt['cmd.run']('date +%s') }} ; serial (epoch)
+     {%- else -%}
+     {{ salt['pillar.get']('dns:serial', 2025010101) }} ; serial (pillar)
+     {%- endif %}
+     7200 ; refresh
+     900 ; retry
+     1209600 ; expire
+     86400 ) ; minimum
+
+{%- for ns in zone.ns %}
+@ IN NS {{ ns }}
+{%- endfor %}
+
+{%- for rec in zone.a|default([]) %}
+{{ rec.name }} IN A {{ rec.ip }}
+{%- endfor %}
+{%- for rec in zone.cname|default([]) %}
+{{ rec.name }} IN CNAME {{ rec.target }}.
+{%- endfor %}
+{%- for rec in zone.txt|default([]) %}
+{{ rec.name }} IN TXT "{{ rec.text }}"
+{%- endfor %}
