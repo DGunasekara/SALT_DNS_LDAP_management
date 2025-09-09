@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Simple policy: ensure keys exist; if KSK > 365d old or ZSK > 90d old, roll and sign.
+set -euo pipefail
+ZONE="$1"
+KEYDIR="$2"
+cd "$KEYDIR"
+mkdir -p "$KEYDIR/$ZONE"
+cd "$KEYDIR/$ZONE"
+
+age_days() { echo $(( ( $(date +%s) - $(date -r "$1" +%s) ) / 86400 )); }
+
+ensure_keys() {
+  ls K${ZONE}*.key >/dev/null 2>&1 || {
+    dnssec-keygen -a ECDSAP256SHA256 -n ZONE -f KSK "$ZONE"
+    dnssec-keygen -a ECDSAP256SHA256 -n ZONE "$ZONE"
+}
+}
+
+roll_if_needed() {
+  KSK=$(ls K${ZONE}*+013+*.key 2>/dev/null | head -n1 || true)
+  ZSK=$(ls K${ZONE}*+013+*.key 2>/dev/null | tail -n1 || true)
+  [ -n "$KSK" ] && KSKA=$(age_days "$KSK") || KSKA=9999
+  [ -n "$ZSK" ] && ZSKA=$(age_days "$ZSK") || ZSKA=9999
+  if [ "$KSKA" -gt 365 ]; then dnssec-keygen -f KSK -a ECDSAP256SHA256 -n ZONE "$ZONE"; fi
+  if [ "$ZSKA" -gt 90 ]; then dnssec-keygen -a ECDSAP256SHA256 -n ZONE "$ZONE"; fi
+}
+sign_zone() {
+  cp /etc/bind/zones/${ZONE}.db .
+  dnssec-signzone -A -3 $(head -c 1000 /dev/urandom | sha1sum | cut -b 1-16) \
+-N increment -o "$ZONE" -t ${ZONE}.db
+  chown bind:bind K${ZONE}* ${ZONE}.db.signed
+  mv -f ${ZONE}.db.signed /etc/bind/zones/${ZONE}.db
+  rndc loadkeys "$ZONE" || true
+  rndc reload "$ZONE" || true
+}
+
+ensure_keys
+roll_if_needed
+sign_zone
