@@ -11,7 +11,7 @@ Tasks are listed below:
 
 in `dns`, there is a directory `/srv/salt/` there are files to be added in the SALT-Master
 
-Tested on ubuntu 24 server and installed BIND9 was installed using `init.sls` from SALT-Master.
+Tested on ubuntu 24 server and BIND9 was installed using `init.sls` from SALT-Master.
 
 Phrase 1: It is monitoring DNS service and restart automatically on failure.
 
