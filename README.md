@@ -3,6 +3,29 @@ This is a repo where the testing and modification is done for tasks for DNS and 
 
 **The files are under modification and to be updated with the testing**
 
+Install SALT
+```
+sudo mkdir -p /etc/apt/keyrings
+
+curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public \
+  | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
+
+curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources \
+  | sudo tee /etc/apt/sources.list.d/salt.sources
+
+
+sudo apt update
+sudo apt install -y salt-minion
+```
+
+Added the master ip to /etc/salt/minion file
+
+Services :
+``
+sudo systemctl restart salt-minion
+sudo systemctl enable salt-minion
+``
+
 Tasks are listed below:
 
 ### 1. LDAP / User Account Management
