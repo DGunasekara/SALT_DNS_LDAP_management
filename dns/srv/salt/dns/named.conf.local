@@ -1,0 +1,4 @@
+zone "ssotest.learn.ac.lk" {
+    type master;
+    file "/etc/bind/db.ssotest.learn.ac.lk";
+};
