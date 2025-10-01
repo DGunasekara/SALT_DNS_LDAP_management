@@ -15,3 +15,17 @@ Tested on ubuntu 24 server and BIND9 was installed using `init.sls` from SALT-Ma
 
 Phrase 1: It is monitoring DNS service and restart automatically on failure.
 
+after addign files in dns directory
+
+`sudo salt 'server-id state.apply dns`
+
+after ading scheduler file
+
+`sudo salt 'dns' state.apply scheduler.bind-watch`
+
+to check the scheduled tasks
+
+`sudo salt 'dns' schedule.list`
+
+
+
