@@ -9,6 +9,9 @@ Tasks are listed below:
 
 ### 2. DNS Server Management
 
-  - Monitor DNS service and restart automatically on failure.
+in `dns`, there is a directory `/srv/salt/` there are files to be added in the SALT-Master
 
-in `dns`, there is a directory `/srv/salt/` 
+Tested on ubuntu 24 server and installed BIND9 was installed using `init.sls` from SALT-Master.
+
+Phrase 1: It is monitoring DNS service and restart automatically on failure.
+
