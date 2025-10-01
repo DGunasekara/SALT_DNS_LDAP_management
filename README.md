@@ -5,9 +5,9 @@ This is a repo where the testing and modification is done for tasks for DNS and 
 
 Tasks are listed below:
 
-1. LDAP / User Account Management
+### 1. LDAP / User Account Management
 
-2. DNS Server Management
+### 2. DNS Server Management
 
   - Monitor DNS service and restart automatically on failure.
 
