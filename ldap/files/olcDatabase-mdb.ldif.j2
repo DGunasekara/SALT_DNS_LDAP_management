@@ -1,9 +1,0 @@
-dn: olcDatabase=mdb,cn=config
-objectClass: olcDatabaseConfig
-objectClass: olcMdbConfig
-olcDatabase: mdb
-olcSuffix: {{ pillar['ldap']['base_dn'] }}
-olcDbDirectory: /var/lib/ldap
-olcRootDN: {{ pillar['ldap']['admin_dn'] }}
-olcRootPW: {{ pillar['ldap']['admin_pw'] }}
-olcDbIndex: objectClass eq

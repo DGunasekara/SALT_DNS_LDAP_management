@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-DIR="{{ pillar['ldap']['backup']['dir'] }}"
-KEEP={{ pillar['ldap']['backup']['keep_days'] }}
-mkdir -p "$DIR"
-STAMP=$(date -u +%F-%H%M%S)
-F="$DIR/ldap-$STAMP.ldif.gz"
-slapcat | gzip -9 > "$F"
-find "$DIR" -type f -name 'ldap-*.ldif.gz' -mtime +$KEEP -delete

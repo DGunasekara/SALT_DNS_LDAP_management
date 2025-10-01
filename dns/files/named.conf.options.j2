@@ -1,8 +1,0 @@
-options {
-  directory "/var/cache/bind";
-  listen-on { {{ pillar['dns']['bind']['listen_on'] | join('; ') }}; };
-  recursion {{ 'yes' if pillar['dns']['bind']['recursion'] else 'no' }};
-  dnssec-validation auto;
-  auth-nxdomain no;
-  empty-zones-enable no;
-};
