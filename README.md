@@ -28,9 +28,7 @@ sudo systemctl enable salt-minion
 
 Tasks are listed below:
 
-### 1. LDAP / User Account Management
-
-### 2. DNS Server Management
+### 1. DNS Server Management
 
 in `dns`, there is a directory `/srv/salt/` there are files to be added in the SALT-Master
 
@@ -50,7 +48,7 @@ to check the scheduled tasks
 
 `sudo salt 'dns' schedule.list`
 
-### 3. MySQL Service Monitoring
+### 2. MySQL Service Monitoring
 
 Use `mysql/monitor.sls` to ensure the MySQL service stays enabled and is restarted automatically if it stops:
 
@@ -70,7 +68,7 @@ Afterwards, verify the job is registered with:
 sudo salt '<minion-id>' schedule.list
 ```
 
-### 4. LDAP Service Monitoring
+### 3. LDAP Service Monitoring
 
 Use `ldap/monitor.sls` to keep the LDAP (slapd) service enabled and running automatically:
 
@@ -89,7 +87,7 @@ Afterwards, verify the job registration with:
 ```
 sudo salt '<minion-id>' schedule.list
 ```
-### 5. Mail Service Monitoring
+### 4. Mail Service Monitoring
 
 Use `mail/monitor.sls` to keep the Postfix mail service enabled and running automatically:
 
