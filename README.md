@@ -70,5 +70,24 @@ Afterwards, verify the job is registered with:
 sudo salt '<minion-id>' schedule.list
 ```
 
+### 4. LDAP Service Monitoring
+
+Use `ldap/monitor.sls` to keep the LDAP (slapd) service enabled and running automatically:
+
+```
+sudo salt '<minion-id>' state.apply ldap.monitor
+```
+
+To deploy a scheduler job that re-applies the service check every minute:
+
+```
+sudo salt '<minion-id>' state.apply scheduler.ldap-watch
+```
+
+Afterwards, verify the job registration with:
+
+```
+sudo salt '<minion-id>' schedule.list
+```
 
 
