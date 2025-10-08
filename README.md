@@ -50,5 +50,25 @@ to check the scheduled tasks
 
 `sudo salt 'dns' schedule.list`
 
+### 3. MySQL Service Monitoring
+
+Use `mysql/monitor.sls` to ensure the MySQL service stays enabled and is restarted automatically if it stops:
+
+```
+sudo salt '<minion-id>' state.apply mysql.monitor
+```
+
+You can also deploy a scheduler job that re-applies the service check every minute:
+
+```
+sudo salt '<minion-id>' state.apply scheduler.mysql-watch
+```
+
+Afterwards, verify the job is registered with:
+
+```
+sudo salt '<minion-id>' schedule.list
+```
+
 
 
