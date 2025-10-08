@@ -107,6 +107,26 @@ Afterwards, verify the job registration with:
 sudo salt '<minion-id>' schedule.list
 ```
 
+### 6. Apache Service Monitoring
+
+Use `apache/monitor.sls` to ensure the Apache HTTP service stays enabled and running automatically:
+
+```
+sudo salt '<minion-id>' state.apply apache.monitor
+```
+
+To deploy a scheduler job that re-applies the service check every minute:
+
+```
+sudo salt '<minion-id>' state.apply scheduler.apache-watch
+```
+
+Afterwards, verify the job registration with:
+
+```
+sudo salt '<minion-id>' schedule.list
+```
+
 ### Minion-side requirements
 
 No manual configuration is required on the minion beyond having the `salt-minion` package installed and the service running. Each scheduler state writes its own configuration file to `/etc/salt/minion.d/` and immediately reloads the minion's scheduler, so the jobs become active as soon as you apply the state from the Salt master. You only need to apply the desired `*.monitor` or `scheduler.*` states from the master as shown above.
