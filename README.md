@@ -87,6 +87,41 @@ Afterwards, verify the job registration with:
 ```
 sudo salt '<minion-id>' schedule.list
 ```
+
+### 3b. LDAP Bulk User Provisioning
+
+To create multiple LDAP users in one run, use the `ldap/bulk_users.sls` state. It iterates over user definitions supplied through pillar data and ensures each entry exists in the directory. First, define the connection credentials and the users you want to create in pillar (for example `pillar/ldap_users.sls`):
+
+```
+ldap:
+  bind:
+    host: ldap://ldap.example.com
+    port: 389
+    binddn: cn=admin,dc=example,dc=com
+    bindpw: super-secret-password
+    starttls: true
+  users:
+    - dn: uid=jdoe,ou=People,dc=example,dc=com
+      uid: jdoe
+      cn: John Doe
+      sn: Doe
+      mail: jdoe@example.com
+    - dn: uid=asmith,ou=People,dc=example,dc=com
+      uid: asmith
+      cn: Alice Smith
+      sn: Smith
+      mail: asmith@example.com
+```
+
+Then apply the state from the Salt master:
+
+```
+sudo salt '<minion-id>' state.apply ldap.bulk_users
+```
+
+If no connection information or users are defined, the state safely reports the missing data without altering LDAP.
+
+
 ### 4. Mail Service Monitoring
 
 Use `mail/monitor.sls` to keep the Postfix mail service enabled and running automatically:
