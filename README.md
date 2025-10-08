@@ -89,5 +89,25 @@ Afterwards, verify the job registration with:
 ```
 sudo salt '<minion-id>' schedule.list
 ```
+### 5. Mail Service Monitoring
+
+Use `mail/monitor.sls` to keep the Postfix mail service enabled and running automatically:
+
+```
+sudo salt '<minion-id>' state.apply mail.monitor
+```
+
+To deploy a scheduler job that re-applies the service check every minute:
+
+```
+sudo salt '<minion-id>' state.apply scheduler.mail-watch
+```
+
+Afterwards, verify the job registration with:
+
+```
+sudo salt '<minion-id>' schedule.list
+```
+
 
 
